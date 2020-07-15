@@ -3,6 +3,7 @@ syntax = "proto3";
 package services;
 
 import "google/api/annotations.proto";
+import "ProdModel.proto";
 
 service ProdService {
   rpc GetProdStock(ProdRequest) returns (ProdResponse){
@@ -10,13 +11,36 @@ service ProdService {
       get: "/v1/getProdStock/{prod_id}"
     };
   };
+
+  //返回n个商品库存
+  rpc GetProdStocks(QuerySize) returns (ProdStockList){
+  }
+
+  rpc GetProdInfo(ProdRequest) returns (ProdModel){
+
+  }
+}
+
+enum Area {
+  Area_A = 0;
+  Area_B = 1;
+  Area_C = 2;
 }
 
 message ProdRequest {
   int32 prod_id = 1; // 传入商品id
+  Area area = 2; // 区域
 }
 
 message ProdResponse {
   int32 prod_stock = 1;// 返回商品库存
 }
 
+message QuerySize {
+  int32 size = 1;
+}
+
+// repeaed 修饰符
+message ProdStockList {
+  repeated ProdResponse pro_stocks = 1;
+}

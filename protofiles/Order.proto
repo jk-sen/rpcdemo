@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package services;
+
+import "google/api/annotations.proto";
+import "ProdModel.proto";
+
+message OrderRequest{
+  OrderMain order_main = 1;
+}
+
+
+message OrderResponse{
+  int32 status = 1;
+  string message = 2;
+}
+
+service OrderServer{
+  rpc CreateOrder(OrderRequest) returns(OrderResponse){
+    option (google.api.http) = {
+      post: "/v1/createOrder",
+      body: "order_main"
+    };
+  }
+}

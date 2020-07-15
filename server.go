@@ -18,6 +18,7 @@ func main() {
     rpcServer := grpc.NewServer(grpc.Creds(helper.GetServerCert()))
 
     services.RegisterProdServiceServer(rpcServer, new(services.ProdService))
+    services.RegisterOrderServerServer(rpcServer, new(services.OrderService))
 
     listen, err := net.Listen("tcp", fmt.Sprintf(":%s", GrpcPort))
 
